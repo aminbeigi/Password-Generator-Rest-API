@@ -7,13 +7,11 @@ api = Api(app)
 passsword_generator = PasswordGenerator()
 
 class Password(Resource):
-    def get(self, password_num):
-        data = passsword_generator.generate(3)
-        #words = data['words']
-        #passwords = data['passwords']
+    def get(self, password_count):
+        data = passsword_generator.generate(password_count)
         return data
 
-api.add_resource(Password, '/password/random/<int:password_num>')
+api.add_resource(Password, '/password/random/<int:password_count>')
 
 if __name__ == "__main__":
     app.run(debug=True)
