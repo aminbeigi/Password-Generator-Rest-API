@@ -46,6 +46,12 @@ class PasswordGenerator():
                 # avoid indexing errors
                 if len(data) == 0:
                     password_lst.append(random_word)
+                    continue
+                if len(data) < 5:
+                    url = API_URL + f'{random_word}&max={len(data)}'
+                    random_num = randint(0, len(data)-1)
+                    password_lst.append(data[random_num]['word'])
+                    continue
 
                 random_num = randint(0, 4)
                 password_lst.append(data[random_num]['word'])
