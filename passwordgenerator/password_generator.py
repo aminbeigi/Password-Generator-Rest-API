@@ -6,7 +6,6 @@ from random import choice
 
 API_URL = 'https://api.datamuse.com/words?rel_trg='
 BROWSER = mechanicalsoup.Browser()
-WORD_LST = ['cat', 'window', 'dog', 'horse', 'barn']
 WORD_LST_PATH = 'wordlist.txt'
 
 class PasswordGenerator():
@@ -30,13 +29,13 @@ class PasswordGenerator():
 
     def generate(self, password_count):
         password_lst = []
-        output_word_lst = []
-        output_data_lst = []
+        word_list = []
+        output_dictionary_lst = [] # will contain list of dicts
 
         for i in range(0, password_count):
             for j in range(0, 2):
                 random_word = self.get_word()
-                output_word_lst.append(random_word)
+                word_list.append(random_word)
 
                 url = API_URL + f'{random_word}&max=5' # limit response length
 
@@ -59,12 +58,12 @@ class PasswordGenerator():
             password = self.case_randomizer('-'.join(password_lst))
             
             data = {
-                'words': output_word_lst,
+                'words': word_list,
                 'password': password
             }
 
-            output_data_lst.append(data)
+            output_dictionary_lst.append(data)
             password_lst = []
-            output_word_lst = []
+            word_list = []
 
-        return output_data_lst
+        return output_dictionary_lst
