@@ -1,2 +1,7 @@
 Flask
 Flask-RESTful
+requests
+
+mechanicalsoup
+json
+random
