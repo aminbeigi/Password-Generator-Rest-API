@@ -12,11 +12,11 @@ class PasswordGenerator():
     def case_randomizer(self, string):
         password = ''
         for char in string:
-            case = randint(0, 2)
+            case = randint(0, 1)
             if case == 0:
                 password += char.upper()
             elif case == 1:
-                password += char.lower()	
+                password += char.lower()
         return password
 
     def generate(self, password_count):
@@ -28,17 +28,19 @@ class PasswordGenerator():
             for j in range(0, 2):
                 random_word = choice(WORD_LST)
                 output_word_lst.append(random_word)
-                url = API_URL + f'{random_word}' + '&max=1'
+
+                url = API_URL + f'{random_word}' + '&max=5' # limit response length
 
                 response = BROWSER.get(url)
                 data = json.loads(response.text)
-                password_lst.append(data[0]['word'])
+                random_num = randint(0, 4)
+                password_lst.append(data[random_num]['word'])
 
-                password = self.case_randomizer('-'.join(password_lst))
+            password = self.case_randomizer('-'.join(password_lst))
             
             data = {
                 'words': output_word_lst,
-                'passwords': password
+                'password': password
             }
 
             output_data_lst.append(data)
