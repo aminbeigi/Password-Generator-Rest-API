@@ -1,5 +1,5 @@
 <p align="center">
-<img src="images/api.png" width="256" height="256"/>
+<img src="images/api.png" width="128" height="128"/>
 <br/>
 <h3 align="center">Password Generator Rest Api</h3>
 <p align="center">Source code for Password-Generator-Rest-API.</p>
