@@ -6,7 +6,7 @@ from random import choice
 
 API_URL = 'https://api.datamuse.com/words?rel_trg='
 
-word_list = ['cat', 'dog']
+WORD_LST = ['cat', 'dog', 'horse', 'barn']
 
 class PasswordGenerator():
     def randomizer(self, string):
@@ -36,21 +36,29 @@ class PasswordGenerator():
 
     def generate(self, password_num):
         password_lst = []
-        
-        i=0
-        while i != 1:
+        output_word_lst = []
+        i = password_num
+
+        while i != 0:
             try:
-                url = API_URL + f'cat'
+                random_word = choice(WORD_LST)
+                output_word_lst.append(random_word)
+                url = API_URL + f'{random_word}'
+
                 browser = mechanicalsoup.Browser()
                 response = browser.get(url)
                 data = json.loads(response.text)
                 random_num = randrange(len(data)) # randrange throws ValueError here if data = 0
                 password_lst.append(data[random_num]['word'])
-                i += 1
+                i -= 1
             except ValueError:
                 if password_num == 0:
                     print("Minimum of 1 keyword required.")
                 else:	
                     print("Got nothing for that, try again.")
         password = self.randomizer(''.join(password_lst))
+        
+        my_dict = {
+            'words': 'test'
+        }
         return password

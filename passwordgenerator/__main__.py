@@ -12,13 +12,12 @@ class Password(Resource):
         return {
             "data": { 
                 "words": "epic word",
-                
-                "passwords": [passsword_generator.generate(3)]
+                "passwords": passsword_generator.generate(1)
                 
                 }
             }
 
-api.add_resource(Password, '/password/<int:password_num>')
+api.add_resource(Password, '/password/random/<int:password_num>')
 
 if __name__ == "__main__":
     app.run(debug=True)
