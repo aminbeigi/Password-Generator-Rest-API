@@ -1,9 +1,8 @@
 from flask import Flask
 from flask_restful import Api, Resource
-from password_generator import PasswordGenerator
+from passwordgenerator.password_generator import PasswordGenerator
+from passwordgenerator import api, app
 
-app = Flask(__name__)
-api = Api(app)
 passsword_generator = PasswordGenerator()
 
 class Password(Resource):
@@ -12,6 +11,3 @@ class Password(Resource):
         return data
 
 api.add_resource(Password, '/password/random/<int:password_count>')
-
-if __name__ == "__main__":
-    app.run(debug=True)
