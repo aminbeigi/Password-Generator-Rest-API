@@ -10,7 +10,12 @@ class Password(Resource):
     def get(self, password_num):
 
         return {
-            "data": { "passwords": passsword_generator.generate(3)}
+            "data": { 
+                "words": "epic word",
+                
+                "passwords": [passsword_generator.generate(3)]
+                
+                }
             }
 
 api.add_resource(Password, '/password/<int:password_num>')
