@@ -17,21 +17,6 @@ class PasswordGenerator():
                 password += char.upper()
             elif case == 1:
                 password += char.lower()	
-            else:
-                if char == 'a':
-                    password += '@'
-                elif char == 'e':
-                    password += '3'
-                elif char == 'i' or char == 'l':
-                    password += choice('1!|')
-                elif char == 'o':
-                    password += choice('0.')
-                elif char == 'c':
-                    password += choice('<(')	
-                elif char == 's':
-                    password += '$'
-                else:
-                    password += char
         return password
 
     def generate(self, password_num):
