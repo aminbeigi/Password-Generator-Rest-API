@@ -8,12 +8,13 @@ passsword_generator = PasswordGenerator()
 
 class Password(Resource):
     def get(self, password_num):
-
+        data = passsword_generator.generate(1)
+        words = data['words']
+        passwords = data['passwords']
         return {
             "data": { 
-                "words": "epic word",
-                "passwords": passsword_generator.generate(1)
-                
+                "words": words,
+                "passwords": passwords
                 }
             }
 

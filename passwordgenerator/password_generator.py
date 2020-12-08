@@ -58,7 +58,8 @@ class PasswordGenerator():
                     print("Got nothing for that, try again.")
         password = self.randomizer(''.join(password_lst))
         
-        my_dict = {
-            'words': 'test'
+        data = {
+            'words': output_word_lst,
+            'passwords': password
         }
-        return password
+        return data
