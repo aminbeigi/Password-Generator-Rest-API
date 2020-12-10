@@ -17,7 +17,60 @@
 epic description
 
 ## Example
-epic example
+`http://127.0.0.1:5000/password/random/3`
+```json
+[
+{
+words: [
+"promise",
+"letter"
+],
+related words: [
+"marry",
+"informing"
+],
+password: "mARryInfOrm1ng"
+},
+{
+words: [
+"past",
+"good"
+],
+related words: [
+"participle",
+"shepherd"
+],
+password: "pArt1cipLE$hePherD"
+}
+]
+```
+`http://127.0.0.1:5000/password/cat&computer/2`
+```json
+[
+{
+words: [
+"cat",
+"computer"
+],
+related words: [
+"kitten",
+"programmer"
+],
+password: "K|tteNprogramMeR"
+},
+{
+words: [
+"cat",
+"computer"
+],
+related words: [
+"feline",
+"macintosh"
+],
+password: "F3|INemAC|ntosH"
+}
+]
+```
 
 ## Requirements
 * Python 3.9.1+
