@@ -17,7 +17,7 @@
 epic description
 
 ## Example
-`http://127.0.0.1:5000/password/random/3`
+`.../password/random/3`
 ```json
 [
   {
@@ -44,7 +44,7 @@ epic description
   }
 ]
 ```
-`http://127.0.0.1:5000/password/cat&computer/2`
+`.../password/cat&computer/2`
 ```json
 [
   {
