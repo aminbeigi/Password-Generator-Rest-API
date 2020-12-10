@@ -48,26 +48,26 @@ epic description
 ```json
 [
   {
-  words: [
-    "cat",
-    "computer"
-  ],
-  related words: [
-    "kitten",
-    "programmer"
-  ],
-  password: "K|tteNprogramMeR"
+    words: [
+      "cat",
+      "computer"
+    ],
+    related words: [
+      "kitten",
+      "programmer"
+    ],
+    password: "K|tteNprogramMeR"
   },
   {
-  words: [
-    "cat",
-    "computer"
-  ],
-  related words: [
-    "feline",
-    "macintosh"
-  ],
-  password: "F3|INemAC|ntosH"
+    words: [
+      "cat",
+      "computer"
+    ],
+    related words: [
+      "feline",
+      "macintosh"
+    ],
+    password: "F3|INemAC|ntosH"
   }
 ]
 ```
