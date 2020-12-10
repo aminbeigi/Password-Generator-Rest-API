@@ -5,6 +5,7 @@ from random import randrange, randint, choice
 API_URL = 'https://api.datamuse.com/words?rel_trg='
 BROWSER = mechanicalsoup.Browser()
 WORD_LST_PATH = 'wordlist.txt'
+MAX_API_RESPONSE = 5
 
 class DataGenerator():
     def get_word(self):
@@ -57,39 +58,37 @@ class DataGenerator():
         return password
 
     def generate_random(self, data_length_count):
-        words_lst = []
-        related_words_lst = []
         output_dictionary_lst = [] # will contain list of dicts
 
         number_of_words_in_each_dict = 2
         for i in range(0, data_length_count):
             output_string = ''
+            words_lst, related_words_lst = [], []
             for j in range(0, number_of_words_in_each_dict):
                 random_word = self.get_word()
                 words_lst.append(random_word)
-                url = API_URL + f'{random_word}&max=5' # limit response length
+                url = API_URL + f'{random_word}&max={MAX_API_RESPONSE}' # limit response length
                 response = BROWSER.get(url)
                 data = json.loads(response.text)
 
-                # avoid indexing errors
+                # no data for that word
                 if len(data) == 0:
                     output_string += random_word
                     related_words_lst.append(random_word)
                     continue
-                if len(data) < 5:
+
+                # avoid indexing errors
+                if len(data) < MAX_API_RESPONSE:
                     url = API_URL + f'{random_word}&max={len(data)}'
                     random_num = randint(0, len(data)-1)
-                    related_word = data[random_num]['word']
-                    related_words_lst.append(related_word)
-                    continue
-
-                random_num = randint(0, 4)
+                else:
+                    random_num = randint(0, MAX_API_RESPONSE-1)
+                    
                 related_word = data[random_num]['word']
                 related_words_lst.append(related_word)
                 output_string += related_word
 
             password = self.case_randomizer(output_string)
-            
             data = {
                 'words': words_lst,
                 'related words': related_words_lst,
@@ -97,8 +96,6 @@ class DataGenerator():
             }
 
             output_dictionary_lst.append(data)
-            words_lst = []
-            related_words_lst = []
 
         return output_dictionary_lst
 
