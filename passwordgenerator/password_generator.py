@@ -16,6 +16,17 @@ class PasswordGenerator():
             random_word = lines[random_num]
             random_word = random_word[0:-1] # cull new line character
         return random_word
+    
+    def parse_string(self, string):
+        for i in range(0, string.count('&')):
+            # e.g. cat&dog&wolf
+            word_lst = []
+            word = string[0:string.find('&')]
+            word_lst.append(word)
+            # remove word and &
+            string = string.removeprefix(word + '&')
+        word_lst.append(string)
+        return word_lst
 
     def case_randomizer(self, string):
         password = ''
@@ -86,6 +97,53 @@ class PasswordGenerator():
             output_dictionary_lst.append(data)
             password_lst = [] # BETTER NAME FOR THIS
             words_lst = []
+            related_words_lst = []
+
+        return output_dictionary_lst
+
+    def custom_generate(self, password_count, user_string):
+        password_lst = []
+
+        words_lst = self.parse_string(user_string)
+
+        related_words_lst = []
+        output_dictionary_lst = [] # will contain list of dicts
+
+        for i in range(0, password_count):
+            for j in range(0, len(words_lst)):
+
+                url = API_URL + f'{words_lst[j]}&max=5' # limit response length
+
+                response = BROWSER.get(url)
+                data = json.loads(response.text)
+
+                # avoid indexing errors
+                if len(data) == 0:
+                    password_lst.append(words_lst[j])
+                    related_words_lst.append(words_lst[j])
+                    continue
+                if len(data) < 5:
+                    url = API_URL + f'{words_lst[j]}&max={len(data)}'
+                    random_num = randint(0, len(data)-1)
+                    related_word = data[random_num]['word']
+                    related_words_lst.append(related_word)
+                    continue
+
+                random_num = randint(0, 4)
+                related_word = data[random_num]['word']
+                related_words_lst.append(related_word)
+                password_lst.append(related_word)
+
+            password = self.case_randomizer(''.join(password_lst))
+            
+            data = {
+                'words': words_lst,
+                'related words': related_words_lst,
+                'password': password
+            }
+
+            output_dictionary_lst.append(data)
+            password_lst = [] # BETTER NAME FOR THIS
             related_words_lst = []
 
         return output_dictionary_lst
