@@ -20,7 +20,7 @@ epic description
 epic example
 
 ## Requirements
-* Python 3.8.2+
+* Python 3.9.1+
 
 ## Acknowledgements
 API: https://www.datamuse.com/api/
