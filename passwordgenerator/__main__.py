@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource, abort
 from passwordgenerator.data_generator import DataGenerator
 from passwordgenerator import api, app
@@ -20,13 +20,13 @@ class RandomPassword(Resource):
         data = data_generator.generate_random(data_length_count)
         return data
 
-# input is assumed to be seperated by &
 class DefaultCustomPassword(Resource):
     def get(self, user_input):
         default_password_size = 5
         data = data_generator.generate_custom(default_password_size, user_input)
         return data
 
+# input is assumed to be seperated by &
 class CustomPassword(Resource):
     def get(self, user_input, data_length_count):
         if data_length_count > 20:

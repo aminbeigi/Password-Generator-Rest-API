@@ -1,7 +1,11 @@
-import requests
+from requests import get, put
 
-BASE = 'http://127.0.0.1:5000/'
+URL1 = 'http://127.0.0.1:5000/password/random'
+URL2 = 'http://127.0.0.1:5000/password/cat&dog'
 
-response = requests.get(BASE + "test")
-
+"""
+response = get(URL1)
 print(response.json())
+response = get(URL2)
+print(response.json())
+"""
