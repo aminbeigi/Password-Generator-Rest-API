@@ -1,14 +1,12 @@
 import mechanicalsoup
 import json
-from random import randrange
-from random import randint
-from random import choice
+from random import randrange, randint, choice
 
 API_URL = 'https://api.datamuse.com/words?rel_trg='
 BROWSER = mechanicalsoup.Browser()
 WORD_LST_PATH = 'wordlist.txt'
 
-class PasswordGenerator():
+class DataGenerator():
     def get_word(self):
         with open(WORD_LST_PATH) as f:
             lines = f.readlines()
@@ -17,14 +15,19 @@ class PasswordGenerator():
             random_word = random_word[0:-1] # cull new line character
         return random_word
     
+    # parse http get request into list
     def parse_string(self, string):
+        # e.g. cat&dog&wolf
+        word_lst = []
+
+        if string.count('&') == 0:
+            word_lst.append(string)     
+            return word_lst
+
         for i in range(0, string.count('&')):
-            # e.g. cat&dog&wolf
-            word_lst = []
             word = string[0:string.find('&')]
             word_lst.append(word)
-            # remove word and &
-            string = string.removeprefix(word + '&')
+            string = string.removeprefix(word + '&') # remove word and &
         word_lst.append(string)
         return word_lst
 
@@ -53,25 +56,24 @@ class PasswordGenerator():
                     password += char
         return password
 
-    def generate(self, password_count):
-        password_lst = []
+    def generate_random(self, data_length_count):
         words_lst = []
         related_words_lst = []
         output_dictionary_lst = [] # will contain list of dicts
 
-        for i in range(0, password_count):
-            for j in range(0, 2):
+        number_of_words_in_each_dict = 2
+        for i in range(0, data_length_count):
+            output_string = ''
+            for j in range(0, number_of_words_in_each_dict):
                 random_word = self.get_word()
                 words_lst.append(random_word)
-
                 url = API_URL + f'{random_word}&max=5' # limit response length
-
                 response = BROWSER.get(url)
                 data = json.loads(response.text)
 
                 # avoid indexing errors
                 if len(data) == 0:
-                    password_lst.append(random_word)
+                    output_string += random_word
                     related_words_lst.append(random_word)
                     continue
                 if len(data) < 5:
@@ -84,9 +86,9 @@ class PasswordGenerator():
                 random_num = randint(0, 4)
                 related_word = data[random_num]['word']
                 related_words_lst.append(related_word)
-                password_lst.append(related_word)
+                output_string += related_word
 
-            password = self.case_randomizer(''.join(password_lst))
+            password = self.case_randomizer(output_string)
             
             data = {
                 'words': words_lst,
@@ -95,21 +97,19 @@ class PasswordGenerator():
             }
 
             output_dictionary_lst.append(data)
-            password_lst = [] # BETTER NAME FOR THIS
             words_lst = []
             related_words_lst = []
 
         return output_dictionary_lst
 
-    def custom_generate(self, password_count, user_string):
-        password_lst = []
-
+    def generate_custom(self, data_length_count, user_string):
         words_lst = self.parse_string(user_string)
 
         related_words_lst = []
         output_dictionary_lst = [] # will contain list of dicts
 
-        for i in range(0, password_count):
+        for i in range(0, data_length_count):
+            output_string = ''
             for j in range(0, len(words_lst)):
 
                 url = API_URL + f'{words_lst[j]}&max=5' # limit response length
@@ -119,7 +119,7 @@ class PasswordGenerator():
 
                 # avoid indexing errors
                 if len(data) == 0:
-                    password_lst.append(words_lst[j])
+                    output_string += words_lst[j]
                     related_words_lst.append(words_lst[j])
                     continue
                 if len(data) < 5:
@@ -132,9 +132,9 @@ class PasswordGenerator():
                 random_num = randint(0, 4)
                 related_word = data[random_num]['word']
                 related_words_lst.append(related_word)
-                password_lst.append(related_word)
+                output_string += related_word
 
-            password = self.case_randomizer(''.join(password_lst))
+            password = self.case_randomizer(output_string)
             
             data = {
                 'words': words_lst,
@@ -143,7 +143,6 @@ class PasswordGenerator():
             }
 
             output_dictionary_lst.append(data)
-            password_lst = [] # BETTER NAME FOR THIS
             related_words_lst = []
 
         return output_dictionary_lst
