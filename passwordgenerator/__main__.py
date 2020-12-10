@@ -19,10 +19,18 @@ class DefaultPassword(Resource):
         return data
 
 # input is assumed to be seperated by &
-class CustomPassword(Resource):
+class DefaultCustomPassword(Resource):
     def get(self, user_string):
-        return user_string
+        default_password_size = 5
+        data = passsword_generator.custom_generate(default_password_size, user_string)
+        return data
+
+class CustomPassword(Resource):
+    def get(self, user_string, password_count):
+        data = passsword_generator.custom_generate(password_count, user_string)
+        return data
 
 api.add_resource(Password, '/password/random/<int:password_count>')
 api.add_resource(DefaultPassword, '/password/random')
-api.add_resource(CustomPassword, '/password/<string:user_string>')
+api.add_resource(DefaultCustomPassword, '/password/<string:user_string>')
+api.add_resource(CustomPassword, '/password/<string:user_string>/<int:password_count>')
