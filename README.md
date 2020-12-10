@@ -14,10 +14,69 @@
 </p>
 
 ## Description
-epic description
+Password-Generator-Rest-API takes words as input or randomly generates them from a wordlist and then finds related/similar words. Then the related words are concatenated and made to be more cryptic looking. All this data is put inside a dict and is given to get requests as a response.
 
 ## Example
-epic example
+Randomly picking 2 words to generate 2 passwords.  
+`.../password/random/2`
+```json
+[
+  {
+    words: [
+      "promise",
+      "letter"
+    ],
+    related words: [
+      "marry",
+      "informing"
+    ],
+    password: "mARryInfOrm1ng"
+  },
+  {
+    words: [
+      "past",
+      "good"
+    ],
+    related words: [
+      "participle",
+      "shepherd"
+    ],
+    password: "pArt1cipLE$hePherD"
+  }
+]
+```
+Using the three user inputted words 'cat', 'computer' and 'apple' to generate 2 passwords.  
+`.../password/cat&computer&apple/2`
+```json
+[
+  {
+    words: [
+      "cat",
+      "computer",
+      "apple"
+    ],
+    related words: [
+      "feline",
+      "graphics",
+      "cider"
+    ],
+      password: "fE1|n3gRapHi($(|der"
+    },
+    {
+    words: [
+      "cat",
+      "computer",
+      "apple"
+    ],
+    related words: [
+      "kitten",
+      "programmer",
+      "cider"
+    ],
+      password: "kItT3nproGramMErC1deR"
+  }
+]
+```
 
 ## Requirements
 * Python 3.9.1+
