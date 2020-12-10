@@ -14,7 +14,7 @@
 </p>
 
 ## Description
-Password_Generator-Rest-API takes words as input or randomly generates them from a wordlist and then finds related/similar words. Then the related words are concatenated and made to be more cryptic looking. All this data is put inside a dict and is given to get requests as a response.
+Password-Generator-Rest-API takes words as input or randomly generates them from a wordlist and then finds related/similar words. Then the related words are concatenated and made to be more cryptic looking. All this data is put inside a dict and is given to get requests as a response.
 
 ## Example
 Randomly picking 2 words to generate 2 passwords.
