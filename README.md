@@ -46,7 +46,7 @@ Randomly picking 2 words to generate 2 passwords.
 ]
 ```
 Using the three user inputted words 'cat', 'computer' and 'apple' to generate 2 passwords.  
-`.../password/cat&computer/2`
+`.../password/cat&computer&apple/2`
 ```json
 [
   {
