@@ -2,6 +2,8 @@ import mechanicalsoup
 import json
 from random import randrange, randint, choice
 
+"""Generate a data dict based on random words or user inputted words"""
+
 API_URL = 'https://api.datamuse.com/words?rel_trg='
 BROWSER = mechanicalsoup.Browser()
 WORD_LST_PATH = 'wordlist.txt'
@@ -62,8 +64,10 @@ class DataGenerator():
 
         number_of_words_in_each_dict = 2
         for i in range(0, data_length_count):
+            # reset for new dict
             output_string = ''
-            words_lst, related_words_lst = [], []
+            words_lst = []
+            related_words_lst = []
             for j in range(0, number_of_words_in_each_dict):
                 random_word = self.get_word()
                 words_lst.append(random_word)
@@ -103,14 +107,13 @@ class DataGenerator():
         words_lst = self.parse_string(user_string)
 
         related_words_lst = []
-        output_dictionary_lst = [] # will contain list of dicts
+        output_dictionary_lst = []
 
         for i in range(0, data_length_count):
             output_string = ''
             for j in range(0, len(words_lst)):
 
-                url = API_URL + f'{words_lst[j]}&max=5' # limit response length
-
+                url = API_URL + f'{words_lst[j]}&max={MAX_API_RESPONSE}' # limit response length
                 response = BROWSER.get(url)
                 data = json.loads(response.text)
 
@@ -119,14 +122,12 @@ class DataGenerator():
                     output_string += words_lst[j]
                     related_words_lst.append(words_lst[j])
                     continue
-                if len(data) < 5:
+                if len(data) < MAX_API_RESPONSE:
                     url = API_URL + f'{words_lst[j]}&max={len(data)}'
                     random_num = randint(0, len(data)-1)
-                    related_word = data[random_num]['word']
-                    related_words_lst.append(related_word)
-                    continue
-
-                random_num = randint(0, 4)
+                else:
+                    random_num = randint(0, MAX_API_RESPONSE-1)
+                    
                 related_word = data[random_num]['word']
                 related_words_lst.append(related_word)
                 output_string += related_word
