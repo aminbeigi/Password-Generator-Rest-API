@@ -21,9 +21,10 @@ class RandomPassword(Resource):
         if len(limit) != 0:
             limit = limit['limit']
             if limit > 20:
-                abort({
-                    'error': f'input of {limit} is greater than the maximum 20'
-                }, 404)
+                abort(413, error = {
+                    'message': f'input of {limit} is greater than the maximum 20',
+                    'error code': '413'
+                })
                 data = data_generator.generate_random(limit)
                 return data
 
