@@ -12,17 +12,22 @@ data_generator = DataGenerator()
 class RandomPassword(Resource):
     
     args = {
-        'limit': fields.Int(required=True)
+        'limit': fields.Int(required=False)
     }
 
     @use_args(args, location="query")
     def get(self, limit):
-        if limit > 20:
-            abort(f"input of {limit} is greater than the maximum 20")
+        # user inputs a limit
+        if len(limit) != 0:
+            limit = limit['limit']
+            if limit > 20:
+                abort({
+                    'error': f'input of {limit} is greater than the maximum 20'
+                }, 404)
+                data = data_generator.generate_random(limit)
+                return data
 
-        print(limit)
-        default_password_size = 5
-        data = data_generator.generate_random(default_password_size)
+        data = data_generator.generate_random()
         return data
 
 # input is assumed to be seperated by &

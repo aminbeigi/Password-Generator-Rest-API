@@ -59,11 +59,11 @@ class DataGenerator():
                     password += char
         return password
 
-    def generate_random(self, data_length_count):
-        output_dictionary_lst = [] # will contain list of dicts
+    def generate_random(self, limit=5):
 
+        output_dictionary_lst = [] # will contain list of dicts
         number_of_words_in_each_dict = 2
-        for i in range(0, data_length_count):
+        for i in range(0, limit):
             # reset for new dict
             output_string = ''
             words_lst = []
@@ -103,13 +103,13 @@ class DataGenerator():
 
         return output_dictionary_lst
 
-    def generate_custom(self, data_length_count, user_string):
+    def generate_custom(self, limit, user_string):
         words_lst = self.parse_string(user_string)
 
         related_words_lst = []
         output_dictionary_lst = []
 
-        for i in range(0, data_length_count):
+        for i in range(0, limit):
             output_string = ''
             for j in range(0, len(words_lst)):
 
