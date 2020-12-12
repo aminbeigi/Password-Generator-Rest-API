@@ -10,6 +10,7 @@ from webargs.flaskparser import use_args, use_kwargs, parser, abort
 data_generator = DataGenerator()
 DEFAULT_LIMIT = 5
 DATA_RESPONSE_LIMIT = 20
+ERROR_MESSAGE_422 = f'input is greater than the maximum 20'
 
 class RandomPassword(Resource):
     
@@ -26,10 +27,7 @@ class RandomPassword(Resource):
             limit = args['limit']
     
         if limit > DATA_RESPONSE_LIMIT:
-            abort(413, error = {
-                'message': f'input of {limit} is greater than the maximum 20',
-                'error code': '413'
-            })
+            abort(422, message = ERROR_MESSAGE_422)
 
         data = data_generator.generate_random(limit)
         return data
@@ -53,10 +51,7 @@ class CustomPassword(Resource):
             limit = args['limit']
     
         if limit > DATA_RESPONSE_LIMIT:
-            abort(413, error = {
-                'message': f'input of {limit} is greater than the maximum 20',
-                'error code': '413'
-            })
+            abort(422, message = ERROR_MESSAGE_422)
 
         data = data_generator.generate_custom(word_lst, limit)
         return data
