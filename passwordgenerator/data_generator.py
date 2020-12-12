@@ -2,7 +2,7 @@ import mechanicalsoup
 import json
 from random import randrange, randint, choice
 
-"""Generate a data dict based on random words or user inputted words"""
+"""Generate a data dictionary based on random words or user inputted words."""
 
 API_URL = 'https://api.datamuse.com/words?rel_trg='
 BROWSER = mechanicalsoup.Browser()
@@ -44,11 +44,9 @@ class DataGenerator():
         return password
 
     def generate_random(self, limit):
-
         output_dictionary_lst = [] # will contain list of dicts
         number_of_words_in_each_dict = 2
         for i in range(0, limit):
-            # reset for new dict
             output_string = ''
             word_lst = []
             related_words_lst = []
@@ -59,7 +57,6 @@ class DataGenerator():
                 response = BROWSER.get(url)
                 data = json.loads(response.text)
 
-                # no data for that word
                 if len(data) == 0:
                     output_string += random_word
                     related_words_lst.append(random_word)
@@ -88,7 +85,6 @@ class DataGenerator():
         return output_dictionary_lst
 
     def generate_custom(self, word_lst, limit):
-
         related_words_lst = []
         output_dictionary_lst = []
 
