@@ -1,5 +1,5 @@
 <p align="center">
-<img src="images/api.png" width="256" height="256"/>
+<img src="images/api.png" width="128" height="128"/>
 <br/>
 <h3 align="center">Password Generator Rest Api</h3>
 <p align="center">Source code for Password-Generator-Rest-API.</p>
@@ -45,23 +45,10 @@ Randomly picking 2 words to generate 2 passwords.
     }
 ]
 ```
-Using the three user inputted words 'cat', 'computer' and 'apple' to generate 2 passwords.  
-`.../api/password?words=cat&words=computer&words=apple&limit=3`
+Three user inputted words 'cat', 'computer' and 'apple' to generate 2 passwords.  
+`.../api/password?words=cat&words=computer&words=apple&limit=2`
 ```json
 [
-    {
-        "words": [
-            "cat",
-            "computer",
-            "apple"
-        ],
-        "related words": [
-            "kitten",
-            "macintosh",
-            "iphone"
-        ],
-        "password": "K!tT3nmAcInToShiphon3"
-    },
     {
         "words": [
             "cat",
