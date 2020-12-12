@@ -8,6 +8,8 @@ from webargs.flaskparser import use_args, use_kwargs, parser, abort
 """A restful API"""
 
 data_generator = DataGenerator()
+DEFAULT_LIMIT = 5
+DATA_RESPONSE_LIMIT = 20
 
 class RandomPassword(Resource):
     
@@ -17,14 +19,13 @@ class RandomPassword(Resource):
 
     @use_args(args, location="query")
     def get(self, args):
-        # if user didn't specify limit default to 5 to avoid key errors
+        # if user didn't specify limit default to DEFAULT_LIMIT to avoid key errors
         if 'limit' not in args:
-            limit = 5
+            limit = DEFAULT_LIMIT
         else:
             limit = args['limit']
     
-        # user inputs a limit
-        if limit > 20:
+        if limit > DATA_RESPONSE_LIMIT:
             abort(413, error = {
                 'message': f'input of {limit} is greater than the maximum 20',
                 'error code': '413'
@@ -45,14 +46,13 @@ class CustomPassword(Resource):
     def get(self, args):
         word_lst = args['words']
 
-        # if user didn't specify limit default to 5 to avoid key errors
+        # if user didn't specify limit default to DEFAULT_LIMIT to avoid key errors
         if 'limit' not in args:
-            limit = 5
+            limit = DEFAULT_LIMIT
         else:
             limit = args['limit']
     
-        # user inputs a limit
-        if limit > 20:
+        if limit > DATA_RESPONSE_LIMIT:
             abort(413, error = {
                 'message': f'input of {limit} is greater than the maximum 20',
                 'error code': '413'
@@ -70,5 +70,4 @@ def handle_request_parsing_error(err, req, schema, *, error_status_code, error_h
     abort(error_status_code, errors=err.messages)
 
 api.add_resource(RandomPassword, '/api/password/random')
-
 api.add_resource(CustomPassword, '/api/password')

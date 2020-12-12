@@ -96,7 +96,7 @@ class DataGenerator():
             output_string = ''
             for j in range(0, len(word_lst)):
 
-                url = API_URL + f'{word_lst[j]}&max={MAX_API_RESPONSE}' # limit response length
+                url = API_URL + f'{word_lst[j]}&max={MAX_API_RESPONSE}'
                 response = BROWSER.get(url)
                 data = json.loads(response.text)
 
