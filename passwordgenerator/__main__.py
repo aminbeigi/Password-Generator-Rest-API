@@ -20,11 +20,9 @@ class RandomPassword(Resource):
 
     @use_args(args, location="query")
     def get(self, args):
-        # if user didn't specify limit default to DEFAULT_LIMIT to avoid key errors
-        if 'limit' not in args:
-            limit = DEFAULT_LIMIT
-        else:
-            limit = args['limit']
+
+        # if user didn't specify limit default to DEFAULT_LIMIT
+        limit = DEFAULT_LIMIT if 'limit' not in args else args['limit']
     
         if limit > DATA_RESPONSE_LIMIT:
             abort(422, message = ERROR_MESSAGE_422)
@@ -44,11 +42,8 @@ class CustomPassword(Resource):
     def get(self, args):
         word_lst = args['words']
 
-        # if user didn't specify limit default to DEFAULT_LIMIT to avoid key errors
-        if 'limit' not in args:
-            limit = DEFAULT_LIMIT
-        else:
-            limit = args['limit']
+        # if user didn't specify limit default to DEFAULT_LIMIT
+        limit = DEFAULT_LIMIT if 'limit' not in args else args['limit']
     
         if limit > DATA_RESPONSE_LIMIT:
             abort(422, message = ERROR_MESSAGE_422)
