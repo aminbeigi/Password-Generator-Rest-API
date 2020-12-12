@@ -103,7 +103,7 @@ class DataGenerator():
 
         return output_dictionary_lst
 
-    def generate_custom(self, limit, user_string):
+    def generate_custom(self, user_string, limt=5):
         words_lst = self.parse_string(user_string)
 
         related_words_lst = []

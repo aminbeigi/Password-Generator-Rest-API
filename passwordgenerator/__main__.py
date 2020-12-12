@@ -32,17 +32,30 @@ class RandomPassword(Resource):
         return data
 
 # input is assumed to be seperated by &
-class DefaultCustomPassword(Resource):
-    def get(self, user_input):
-        default_password_size = 5
-        data = data_generator.generate_custom(default_password_size, user_input)
-        return data
-
 class CustomPassword(Resource):
-    def get(self, user_input, data_length_count):
-        if data_length_count > 20:
-            abort(f"input of {data_length_count} is greater than the maximum 20")
-        data = data_generator.generate_custom(data_length_count, user_input)
+    
+    args = {
+        'words': fields.List(fields.Str()),
+        'limit': fields.Int(required=False)
+    }
+
+    @use_args(args, location="query")
+    def get(self, args):
+        print(args)
+        """
+        # user inputs a limit
+        if len(args['limit']) != 0:
+            limit = args['limit']
+            if limit > 20:
+                abort(413, error = {
+                    'message': f'input of {limit} is greater than the maximum 20',
+                    'error code': '413'
+                })
+                data = data_generator.generate_random(limit)
+                return data
+        """
+
+        data = data_generator.generate_random()
         return data
 
 # This error handler is necessary for usage with Flask-RESTful
@@ -53,7 +66,6 @@ def handle_request_parsing_error(err, req, schema, *, error_status_code, error_h
     """
     abort(error_status_code, errors=err.messages)
 
-api.add_resource(RandomPassword, '/password/random')
+api.add_resource(RandomPassword, '/api/password/random')
 
-api.add_resource(DefaultCustomPassword, '/password/<string:user_input>')
-api.add_resource(CustomPassword, '/password/<string:user_input>/<int:data_length_count>')
+api.add_resource(CustomPassword, '/api/password')
