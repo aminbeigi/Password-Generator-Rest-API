@@ -17,22 +17,6 @@ class DataGenerator():
             random_word = lines[random_num]
             random_word = random_word[0:-1] # cull new line character
         return random_word
-    
-    # parse http get request into list
-    def parse_string(self, string):
-        # e.g. cat&dog&wolf
-        word_lst = []
-
-        if string.count('&') == 0:
-            word_lst.append(string)     
-            return word_lst
-
-        for i in range(0, string.count('&')):
-            word = string[0:string.find('&')]
-            word_lst.append(word)
-            string = string.removeprefix(word + '&') # remove word and &
-        word_lst.append(string)
-        return word_lst
 
     def case_randomizer(self, string):
         password = ''
