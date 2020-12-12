@@ -50,11 +50,11 @@ class DataGenerator():
         for i in range(0, limit):
             # reset for new dict
             output_string = ''
-            words_lst = []
+            word_lst = []
             related_words_lst = []
             for j in range(0, number_of_words_in_each_dict):
                 random_word = self.get_word()
-                words_lst.append(random_word)
+                word_lst.append(random_word)
                 url = API_URL + f'{random_word}&max={MAX_API_RESPONSE}' # limit response length
                 response = BROWSER.get(url)
                 data = json.loads(response.text)
@@ -78,7 +78,7 @@ class DataGenerator():
 
             password = self.case_randomizer(output_string)
             data = {
-                'words': words_lst,
+                'words': word_lst,
                 'related words': related_words_lst,
                 'password': password
             }
@@ -87,27 +87,26 @@ class DataGenerator():
 
         return output_dictionary_lst
 
-    def generate_custom(self, user_string, limt=5):
-        words_lst = self.parse_string(user_string)
+    def generate_custom(self, word_lst, limit=5):
 
         related_words_lst = []
         output_dictionary_lst = []
 
         for i in range(0, limit):
             output_string = ''
-            for j in range(0, len(words_lst)):
+            for j in range(0, len(word_lst)):
 
-                url = API_URL + f'{words_lst[j]}&max={MAX_API_RESPONSE}' # limit response length
+                url = API_URL + f'{word_lst[j]}&max={MAX_API_RESPONSE}' # limit response length
                 response = BROWSER.get(url)
                 data = json.loads(response.text)
 
                 # avoid indexing errors
                 if len(data) == 0:
-                    output_string += words_lst[j]
-                    related_words_lst.append(words_lst[j])
+                    output_string += word_lst[j]
+                    related_words_lst.append(word_lst[j])
                     continue
                 if len(data) < MAX_API_RESPONSE:
-                    url = API_URL + f'{words_lst[j]}&max={len(data)}'
+                    url = API_URL + f'{word_lst[j]}&max={len(data)}'
                     random_num = randint(0, len(data)-1)
                 else:
                     random_num = randint(0, MAX_API_RESPONSE-1)
@@ -119,7 +118,7 @@ class DataGenerator():
             password = self.case_randomizer(output_string)
             
             data = {
-                'words': words_lst,
+                'words': word_lst,
                 'related words': related_words_lst,
                 'password': password
             }

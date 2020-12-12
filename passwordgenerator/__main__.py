@@ -41,7 +41,8 @@ class CustomPassword(Resource):
 
     @use_args(args, location="query")
     def get(self, args):
-        print(args)
+        word_lst = args['words']
+
         """
         # user inputs a limit
         if len(args['limit']) != 0:
@@ -51,11 +52,11 @@ class CustomPassword(Resource):
                     'message': f'input of {limit} is greater than the maximum 20',
                     'error code': '413'
                 })
-                data = data_generator.generate_random(limit)
+                data = data_generator.generate_custom(limit)
                 return data
         """
 
-        data = data_generator.generate_random()
+        data = data_generator.generate_custom(word_lst)
         return data
 
 # This error handler is necessary for usage with Flask-RESTful
