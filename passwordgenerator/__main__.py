@@ -16,19 +16,21 @@ class RandomPassword(Resource):
     }
 
     @use_args(args, location="query")
-    def get(self, limit):
+    def get(self, args):
+        # if user didn't specify limit default to 5 to avoid key errors
+        if 'limit' not in args:
+            limit = 5
+        else:
+            limit = args['limit']
+    
         # user inputs a limit
-        if len(limit) != 0:
-            limit = limit['limit']
-            if limit > 20:
-                abort(413, error = {
-                    'message': f'input of {limit} is greater than the maximum 20',
-                    'error code': '413'
-                })
-                data = data_generator.generate_random(limit)
-                return data
+        if limit > 20:
+            abort(413, error = {
+                'message': f'input of {limit} is greater than the maximum 20',
+                'error code': '413'
+            })
 
-        data = data_generator.generate_random()
+        data = data_generator.generate_random(limit)
         return data
 
 # input is assumed to be seperated by &
@@ -43,20 +45,20 @@ class CustomPassword(Resource):
     def get(self, args):
         word_lst = args['words']
 
-        """
-        # user inputs a limit
-        if len(args['limit']) != 0:
+        # if user didn't specify limit default to 5 to avoid key errors
+        if 'limit' not in args:
+            limit = 5
+        else:
             limit = args['limit']
-            if limit > 20:
-                abort(413, error = {
-                    'message': f'input of {limit} is greater than the maximum 20',
-                    'error code': '413'
-                })
-                data = data_generator.generate_custom(limit)
-                return data
-        """
+    
+        # user inputs a limit
+        if limit > 20:
+            abort(413, error = {
+                'message': f'input of {limit} is greater than the maximum 20',
+                'error code': '413'
+            })
 
-        data = data_generator.generate_custom(word_lst)
+        data = data_generator.generate_custom(word_lst, limit)
         return data
 
 # This error handler is necessary for usage with Flask-RESTful

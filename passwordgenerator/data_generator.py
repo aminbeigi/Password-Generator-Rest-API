@@ -43,7 +43,7 @@ class DataGenerator():
                     password += char
         return password
 
-    def generate_random(self, limit=5):
+    def generate_random(self, limit):
 
         output_dictionary_lst = [] # will contain list of dicts
         number_of_words_in_each_dict = 2
@@ -87,7 +87,7 @@ class DataGenerator():
 
         return output_dictionary_lst
 
-    def generate_custom(self, word_lst, limit=5):
+    def generate_custom(self, word_lst, limit):
 
         related_words_lst = []
         output_dictionary_lst = []
