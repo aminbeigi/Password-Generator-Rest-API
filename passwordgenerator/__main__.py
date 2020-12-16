@@ -10,7 +10,7 @@ from webargs.flaskparser import use_args, use_kwargs, parser, abort
 This API will take in words as a parameter or will randomly generate them and
 a response limit or will be defaulted to DEFAULT_LIMIT. The response will have
 the given paramters, related words and a string of text created by concatenating
-and altering the related words to make them look more cryptic like.
+and altering the related words to make them appear more cryptic.
 """
 
 data_generator = DataGenerator()
