@@ -46,11 +46,11 @@ class DataGenerator():
     def generate_random(self, limit):
         output_dictionary_lst = [] # will contain list of dicts
         number_of_words_in_each_dict = 2
-        for i in range(0, limit):
+        for _ in range(0, limit):
             output_string = ''
             word_lst = []
             related_words_lst = []
-            for j in range(0, number_of_words_in_each_dict):
+            for _ in range(0, number_of_words_in_each_dict):
                 random_word = self.get_word()
                 word_lst.append(random_word)
                 url = API_URL + f'{random_word}&max={MAX_API_RESPONSE}' # limit response length
@@ -88,7 +88,7 @@ class DataGenerator():
         related_words_lst = []
         output_dictionary_lst = []
 
-        for i in range(0, limit):
+        for _ in range(0, limit):
             output_string = ''
             for j in range(0, len(word_lst)):
 
