@@ -49,7 +49,7 @@ class TestApiResponse(TestCase):
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 404)   
 
-        URL = PREFIX + 'api'
+        URL = PREFIX + 'api/passwords/peanuts'
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 404)        
 
