@@ -18,7 +18,8 @@ api = Api(app)
 data_generator = DataGenerator()
 DEFAULT_LIMIT = 5
 API_RESPONSE_LIMIT = 20
-ERROR_MESSAGE_422 = f'input is greater than the maximum 20'
+ERROR_MESSAGE_422 = f"input is greater than the maximum 20"
+ERROR_MESSAGE_400 = f"invalid requst syntax"
 
 class RandomPassword(Resource):
     args = {
@@ -45,6 +46,8 @@ class CustomPassword(Resource):
 
     @use_args(args, location="query")
     def get(self, args):
+        print(args)
+        # user didn't provide any arguements
         word_lst = args['words']
 
         # if user didn't specify limit default to DEFAULT_LIMIT

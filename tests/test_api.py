@@ -23,22 +23,27 @@ class TestApiResponse(TestCase):
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 200)
 
-        URL = PREFIX + 'api/password?words=cat&words=computer?limit=10000'
+        URL = PREFIX + 'api/password?words=cat&words=computer&limit=2'
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 200)
+
+        URL = PREFIX + 'api/password'
+        r = self.client.head(URL)
+        self.assertEqual(r.status_code , 200)       
     
     def test_422(self):
         URL = PREFIX + 'api/password/random?limit=' + str(API_RESPONSE_LIMIT + 22)
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 422)
 
-        URL = PREFIX + 'api/password?words=cat&words=computer?limit=' + str(API_RESPONSE_LIMIT + 22)
+        URL = PREFIX + 'api/password?words=cat&words=computer&limit=' + str(API_RESPONSE_LIMIT + 55555)
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 422)
     
-    def tets_404(self):
-        URL = PREFIX + 'api/password'
+    def test_404(self):
+        URL = PREFIX + 'api'
         r = self.client.head(URL)
+        print('############################', r.status_code)
         self.assertEqual(r.status_code , 404)        
 
 
