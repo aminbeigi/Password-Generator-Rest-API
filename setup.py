@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(
+setup (
     name='passwordgenerator',
     version='1.0.0',
     description='A Rest api.',
