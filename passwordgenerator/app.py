@@ -19,7 +19,6 @@ data_generator = DataGenerator()
 DEFAULT_LIMIT = 5
 API_RESPONSE_LIMIT = 20
 ERROR_MESSAGE_422 = f"input is greater than the maximum 20"
-ERROR_MESSAGE_400 = f"invalid requst syntax"
 
 class RandomPassword(Resource):
     args = {
