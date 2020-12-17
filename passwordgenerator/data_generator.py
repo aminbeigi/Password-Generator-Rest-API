@@ -4,7 +4,7 @@ from random import randrange, randint, choice
 
 """Generate a data dictionary based on random words or user inputted words."""
 
-class DataGenerator():
+class DataGenerator:
     API_URL = 'https://api.datamuse.com/words?rel_trg='
     BROWSER = mechanicalsoup.Browser()
     WORD_LST_PATH = 'wordlist.txt'

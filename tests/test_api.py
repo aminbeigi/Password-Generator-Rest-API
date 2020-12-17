@@ -27,34 +27,31 @@ class TestApiResponse(TestCase):
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 200)
 
+        """ 
+        TODO: fix this
+        returns a type error only when run from __main__
+        """
         URL = PREFIX + 'api/password'
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 200)       
     
     def test_422(self):
-        URL = PREFIX + 'api/password/random?limit=' + str(API_RESPONSE_LIMIT + 22)
+        URL = PREFIX + 'api/password/random?limit=' + str(API_RESPONSE_LIMIT + 1)
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 422)
 
-        URL = PREFIX + 'api/password?words=cat&words=computer&limit=' + str(API_RESPONSE_LIMIT + 55555)
+        URL = PREFIX + 'api/password?words=cat&words=computer&limit=' + str(API_RESPONSE_LIMIT + 1)
         r = self.client.head(URL)
         self.assertEqual(r.status_code , 422)
     
     def test_404(self):
         URL = PREFIX + 'api'
         r = self.client.head(URL)
-        print('############################', r.status_code)
+        self.assertEqual(r.status_code , 404)   
+
+        URL = PREFIX + 'api'
+        r = self.client.head(URL)
         self.assertEqual(r.status_code , 404)        
-
-
-
-"""
-
-response = get(URL1)
-print(response.json())
-response = get(URL2)
-print(response.json())
-"""
 
 if __name__ == '__main__':
     unittest.main()

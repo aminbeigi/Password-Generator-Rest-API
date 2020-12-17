@@ -46,9 +46,11 @@ class CustomPassword(Resource):
 
     @use_args(args, location="query")
     def get(self, args):
-        print(args)
-        # user didn't provide any arguements
-        word_lst = args['words']
+        # user went to ./api/password
+        if 'words' not in args:
+            word_lst = ['cat', 'dog', 'mouse']
+        else:
+            word_lst = args['words']
 
         # if user didn't specify limit default to DEFAULT_LIMIT
         limit = DEFAULT_LIMIT if 'limit' not in args else args['limit']
